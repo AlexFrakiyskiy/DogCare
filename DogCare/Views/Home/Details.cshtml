@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DogCare.Models.DetailsModel>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Appointment List</h2>
+
+<p>
+    @Html.ActionLink("Make New Apointment", "CreateNewAppoint")
+</p>
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AppointDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @if (item.UserName == Session["UserName"].ToString())
+                {
+                    Session["CustomerId"] = item.CustomerId;
+                    Session["FirstName"] = item.FirstName;
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Edit", "Edit", new {id = item.Id, custid = item.CustomerId, FirstName = item.FirstName, apDate=item.AppointDate } ) </li>
+                        <li>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+                    </ul>
+        }
+            </td>
+        </tr>
+    }
+
+</table>
